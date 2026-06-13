@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hardware Guide — Bitcoin Wave</title>
+<meta name="description" content="Which computer should you run your Bitcoin node on? A complete guide to hardware options from $130 to $500+.">
+<link rel="stylesheet" href="/static/docs/style.css">
+</head>
+<body>
+<nav><a href="/">Bitcoin Wave</a> / <a href="/docs">Docs</a> / Hardware Guide</nav>
+<div class="container">
+  <h1>Choosing Hardware for Your Bitcoin Node</h1>
+  <p class="intro">Your Bitcoin node should run on a <strong>dedicated computer</strong> — not your daily laptop or desktop. It runs 24/7, and you don't want your node going offline every time you close your laptop or restart for updates. Here are your options, from cheapest to most powerful.</p>
+
+  <div class="callout warn">
+    <strong>Do not run your node on your main computer.</strong> A Bitcoin node needs to run continuously. Shutting it down means you stop validating transactions and your Lightning channels may force-close. Use a separate, always-on machine.
+  </div>
+
+  <h2>Minimum requirements</h2>
+  <table>
+    <thead><tr><th>Resource</th><th>Minimum</th><th>Recommended</th></tr></thead>
+    <tbody>
+      <tr><td>CPU</td><td>4-core ARM64 or x86-64</td><td>4+ cores, 2+ GHz</td></tr>
+      <tr><td>RAM</td><td>4 GB</td><td>8 GB</td></tr>
+      <tr><td>Storage</td><td>1 TB NVMe SSD</td><td>2 TB NVMe SSD</td></tr>
+      <tr><td>Network</td><td>Ethernet (wired)</td><td>Gigabit Ethernet</td></tr>
+      <tr><td>Power</td><td>Always-on</td><td>UPS battery backup</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout">
+    <strong>Why NVMe SSD?</strong> The Bitcoin blockchain is over 850 GB and growing. Your node reads and writes to disk constantly — verifying transactions, serving blocks to peers, indexing for your wallet. A spinning hard drive or SD card is too slow. NVMe SSDs are 50–100x faster than hard drives and 10x faster than SD cards. They cost about $60 for 1 TB.
+  </div>
+
+  <h2>Option 1: Raspberry Pi 5 — The reference platform</h2>
+  <div class="card-grid">
+    <div class="card">
+      <h3>Budget build</h3>
+      <p>Pi 5 (8 GB) + 1 TB NVMe + NVMe HAT + case + power supply</p>
+      <p class="price">~$130–160</p>
+    </div>
+    <div class="card">
+      <h3>Recommended build</h3>
+      <p>Pi 5 (16 GB) + 2 TB NVMe + NVMe HAT + active cooling case + UPS</p>
+      <p class="price">~$200–250</p>
+    </div>
+  </div>
+  <p><strong>Pros:</strong> Cheapest option. Silent. Uses 8–12 watts (costs ~$1–2/month in electricity). Tiny — fits behind your router. Large community and excellent Linux support.</p>
+  <p><strong>Cons:</strong> Slowest initial sync (12–24 hours). 8 GB RAM is tight if you run all stack components. No built-in NVMe slot (needs HAT adapter).</p>
+  <p><strong>Best for:</strong> First-time node runners. Set-and-forget home nodes. People who want the lowest possible cost.</p>
+  <p>→ <a href="/docs/raspberry-pi">Full Raspberry Pi setup guide</a></p>
+
+  <h2>Option 2: Intel N100 mini-PC</h2>
+  <div class="card-grid">
+    <div class="card">
+      <h3>Typical config</h3>
+      <p>N100 mini-PC (8–16 GB RAM) + 2 TB NVMe (built-in slot)</p>
+      <p class="price">~$200–350</p>
+    </div>
+  </div>
+  <p><strong>Examples:</strong> Beelink Mini S12 Pro, MinisForum UN100, GMKtec NucBox G3. Many come with RAM and SSD included — just add your own 2 TB NVMe if the included drive is too small.</p>
+  <p><strong>Pros:</strong> Faster sync (6–12 hours). Built-in NVMe slot. More RAM available. x86-64 architecture has broader software compatibility. Still very low power (15–25 watts).</p>
+  <p><strong>Cons:</strong> Larger than a Pi. Slightly higher power draw. Some models have fans that are audible.</p>
+  <p><strong>Best for:</strong> People who want faster initial sync and more headroom. Good middle ground between cost and performance.</p>
+
+  <h2>Option 3: Used micro desktop</h2>
+  <div class="card-grid">
+    <div class="card">
+      <h3>Typical config</h3>
+      <p>Dell OptiPlex Micro / HP ProDesk Mini / Lenovo ThinkCentre Tiny + 2 TB NVMe</p>
+      <p class="price">~$150–400</p>
+    </div>
+  </div>
+  <p><strong>Examples:</strong> Dell OptiPlex 3060/5060 Micro, HP ProDesk 400 G5 Mini, Lenovo ThinkCentre M720q. Buy refurbished from eBay or a local IT reseller. Look for i5/i7 8th gen or newer, 8+ GB RAM.</p>
+  <p><strong>Pros:</strong> Best performance per dollar if buying used. Fast sync (4–8 hours). Enterprise-grade reliability. Easy to upgrade RAM and storage. Abundant supply on the second-hand market.</p>
+  <p><strong>Cons:</strong> Larger than a Pi or mini-PC. Higher power draw (25–45 watts). May have a fan. Need to install Linux yourself (or have your agent do it).</p>
+  <p><strong>Best for:</strong> People comfortable with used hardware. Maximum performance on a budget. Running heavier workloads alongside your node.</p>
+
+  <h2>Option 4: Apple Mac Mini</h2>
+  <div class="card-grid">
+    <div class="card">
+      <h3>Typical config</h3>
+      <p>Mac Mini M1/M2 (refurbished) + external NVMe enclosure with 2 TB drive</p>
+      <p class="price">~$400–600</p>
+    </div>
+  </div>
+  <p><strong>Pros:</strong> Whisper quiet. Extremely power efficient (7–15 watts under load). macOS is familiar to many users. Beautiful hardware.</p>
+  <p><strong>Cons:</strong> Most expensive option. Internal SSD is not upgradeable — you'll need an external NVMe enclosure for chain storage. macOS updates can interrupt your node. Less common in the Bitcoin node community (most guides assume Linux).</p>
+  <p><strong>Best for:</strong> Mac users who want premium hardware. People who already have an old Mac Mini sitting in a drawer.</p>
+
+  <div class="callout">
+    <strong>Already have a spare computer?</strong> If you have any always-on machine with 4+ GB RAM and can add a 1 TB+ NVMe SSD, it'll probably work. Tell your agent what you've got and it will assess whether it's suitable.
+  </div>
+
+  <h2>Option 5: Cloud VPS</h2>
+  <p>If you don't want hardware at home at all, you can rent a server in the cloud. See the <a href="/docs/vps-setup">VPS Setup Guide</a> for details. Costs $20–40/month ongoing.</p>
+
+  <h2>Storage: the most important choice</h2>
+  <p>Storage matters more than CPU or RAM for a Bitcoin node. Here's what works:</p>
+  <table>
+    <thead><tr><th>Type</th><th>Speed</th><th>Verdict</th></tr></thead>
+    <tbody>
+      <tr><td>NVMe SSD (M.2)</td><td>3,000+ MB/s</td><td><strong>Best.</strong> Use this.</td></tr>
+      <tr><td>SATA SSD (2.5")</td><td>500 MB/s</td><td>Works, but slower sync. Fine if it's what you have.</td></tr>
+      <tr><td>USB 3.0 external SSD</td><td>400 MB/s</td><td>Works in a pinch. Not ideal for 24/7 use.</td></tr>
+      <tr><td>Hard drive (HDD)</td><td>100 MB/s</td><td><strong>No.</strong> Too slow for initial sync. Will fall behind.</td></tr>
+      <tr><td>MicroSD card</td><td>80 MB/s</td><td><strong>No.</strong> Too slow, too unreliable, too small.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Recommended NVMe drives</h3>
+  <table>
+    <thead><tr><th>Drive</th><th>1 TB price</th><th>2 TB price</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>Samsung 990 EVO</td><td>~$70</td><td>~$120</td><td>Excellent reliability and speed</td></tr>
+      <tr><td>WD Black SN770</td><td>~$60</td><td>~$100</td><td>Great value, widely available</td></tr>
+      <tr><td>Crucial P3 Plus</td><td>~$50</td><td>~$90</td><td>Budget-friendly, good enough</td></tr>
+      <tr><td>Samsung 970 EVO Plus</td><td>~$60</td><td>~$100</td><td>Older but proven reliable</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Power and uptime</h2>
+  <p>Your node should run 24/7. A few tips:</p>
+  <ul>
+    <li><strong>Use a surge protector</strong> at minimum — power spikes can kill electronics</li>
+    <li><strong>Consider a UPS</strong> (Uninterruptible Power Supply) — gives your node time to shut down cleanly during power outages, preventing database corruption</li>
+    <li><strong>Ethernet over WiFi</strong> — wired connections don't drop when your router restarts or when walls interfere with signal</li>
+    <li><strong>Set BIOS to "power on after AC loss"</strong> (for mini-PCs and desktops) — so your node restarts automatically after a power outage</li>
+  </ul>
+
+  <h2>Comparison table</h2>
+  <table>
+    <thead><tr><th>Option</th><th>Cost</th><th>Sync time</th><th>Power draw</th><th>Noise</th><th>Difficulty</th></tr></thead>
+    <tbody>
+      <tr><td>Raspberry Pi 5</td><td>$130–250</td><td>12–24 hrs</td><td>8–12W</td><td>Silent</td><td>Easy</td></tr>
+      <tr><td>Intel N100 mini-PC</td><td>$200–350</td><td>6–12 hrs</td><td>15–25W</td><td>Quiet</td><td>Easy</td></tr>
+      <tr><td>Used micro desktop</td><td>$150–400</td><td>4–8 hrs</td><td>25–45W</td><td>Some fan</td><td>Moderate</td></tr>
+      <tr><td>Mac Mini</td><td>$400–600</td><td>6–10 hrs</td><td>7–15W</td><td>Silent</td><td>Easy</td></tr>
+      <tr><td>Cloud VPS</td><td>$20–40/mo</td><td>4–12 hrs</td><td>N/A</td><td>N/A</td><td>Easy</td></tr>
+    </tbody>
+  </table>
+
+  <div class="nav-footer">
+    <a href="/docs/raspberry-pi">← Raspberry Pi Setup</a>
+    <a href="/docs">All Docs →</a>
+  </div>
+</div>
+<footer><a href="/">Bitcoin Wave</a> — <a href="/docs">Docs</a> · <a href="/privacy">Privacy</a> · <a href="/terms">Terms</a> · <a href="https://github.com/btcwave">GitHub</a></footer>
+</body>
+</html>

@@ -67,6 +67,18 @@ func main() {
 
 	mux.HandleFunc("/", serveIndex)
 	mux.HandleFunc("/success", serveSuccess)
+	mux.HandleFunc("/privacy", serveStatic("static/privacy.html"))
+	mux.HandleFunc("/terms", serveStatic("static/terms.html"))
+	mux.HandleFunc("/docs", serveStatic("static/docs/index.html"))
+	mux.HandleFunc("/docs/", serveStatic("static/docs/index.html"))
+	mux.HandleFunc("/docs/vps-setup", serveStatic("static/docs/vps-setup.html"))
+	mux.HandleFunc("/docs/raspberry-pi", serveStatic("static/docs/raspberry-pi.html"))
+	mux.HandleFunc("/docs/hardware", serveStatic("static/docs/hardware.html"))
+	mux.HandleFunc("/docs/how-it-works", serveStatic("static/docs/how-it-works.html"))
+	mux.HandleFunc("/agent.txt", serveStaticPlain("static/agent.txt"))
+	mux.HandleFunc("/llms.txt", serveStaticPlain("static/llms.txt"))
+	mux.HandleFunc("/robots.txt", serveStaticPlain("static/robots.txt"))
+	mux.HandleFunc("/sitemap.xml", serveStaticXML("static/sitemap.xml"))
 	mux.Handle("/static/", http.FileServer(http.FS(staticFS)))
 
 	log.Printf("btcwave-web listening on %s (data: %s, keys: %d)", *listen, *dataDir, store.Count())
@@ -87,4 +99,40 @@ func serveSuccess(w http.ResponseWriter, r *http.Request) {
 	data, _ := staticFS.ReadFile("static/success.html")
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 	w.Write(data)
+}
+
+func serveStatic(path string) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		data, err := staticFS.ReadFile(path)
+		if err != nil {
+			http.NotFound(w, r)
+			return
+		}
+		w.Header().Set("Content-Type", "text/html; charset=utf-8")
+		w.Write(data)
+	}
+}
+
+func serveStaticPlain(path string) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		data, err := staticFS.ReadFile(path)
+		if err != nil {
+			http.NotFound(w, r)
+			return
+		}
+		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
+		w.Write(data)
+	}
+}
+
+func serveStaticXML(path string) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		data, err := staticFS.ReadFile(path)
+		if err != nil {
+			http.NotFound(w, r)
+			return
+		}
+		w.Header().Set("Content-Type", "application/xml; charset=utf-8")
+		w.Write(data)
+	}
 }

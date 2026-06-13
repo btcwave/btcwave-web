@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy — Bitcoin Wave</title>
+<meta name="description" content="Bitcoin Wave privacy policy. What we collect, what we don't, and how your data is handled.">
+<link rel="stylesheet" href="/static/docs/style.css">
+</head>
+<body>
+<nav><a href="/">Bitcoin Wave</a> / Privacy Policy</nav>
+<div class="container">
+  <h1>Privacy Policy</h1>
+  <p><em>Last updated: 13 June 2026</em></p>
+
+  <p>Bitcoin Wave is operated by Contactualism Pty Ltd (ABN pending), an Australian company. This policy explains what data we collect and how we handle it.</p>
+
+  <h2>The short version</h2>
+  <p>We collect almost nothing. Your node never phones home after setup. We don't track you, profile you, or sell your data. Bitcoin Wave is a privacy-first product — that's the entire point.</p>
+
+  <h2>What we collect</h2>
+
+  <h3>When you buy a license key</h3>
+  <ul>
+    <li><strong>Email address</strong> — provided to Stripe during checkout so we can deliver your license key. We store this alongside your key record so we can re-send the key if you lose it.</li>
+    <li><strong>Payment information</strong> — processed entirely by Stripe. We never see or store your card number, bank details, or billing address. See <a href="https://stripe.com/privacy">Stripe's privacy policy</a>.</li>
+    <li><strong>License key</strong> — we generate and store a license key associated with your purchase. The key is redeemed once during node setup.</li>
+  </ul>
+
+  <h3>When you redeem your key</h3>
+  <ul>
+    <li><strong>Key redemption request</strong> — your agent contacts btcwave.app once to redeem the key. This request contains only the key itself. We record that the key has been redeemed. No IP address, hardware information, or location data is stored.</li>
+  </ul>
+
+  <h3>After setup</h3>
+  <p><strong>Nothing.</strong> Once your key is redeemed, your node never contacts btcwave.app again. There is no telemetry, no analytics, no usage tracking, no update checking, no phone-home mechanism of any kind.</p>
+
+  <h2>What we do NOT collect</h2>
+  <ul>
+    <li>Your Bitcoin addresses or wallet information</li>
+    <li>Your seed phrase (24 words) — this is generated on your hardware and never transmitted</li>
+    <li>Your transaction history</li>
+    <li>Your IP address (beyond what's in standard web server logs during purchase)</li>
+    <li>Your hardware specifications</li>
+    <li>Analytics or tracking cookies on btcwave.app</li>
+    <li>Any data from your running node</li>
+  </ul>
+
+  <h2>Website</h2>
+  <p>btcwave.app does not use cookies, tracking pixels, analytics scripts, or any third-party tracking. The site is a static Go binary serving HTML. Standard web server access logs (IP, timestamp, URL, user-agent) are retained for up to 30 days for security purposes and then deleted.</p>
+
+  <h2>Third parties</h2>
+  <p>The only third party that receives your data is <strong>Stripe</strong>, our payment processor, which handles your checkout securely. We do not share data with any other third party.</p>
+
+  <h2>Data retention</h2>
+  <ul>
+    <li><strong>License key records</strong> (key code, email, tier, redemption status) — retained indefinitely so you can verify or re-retrieve your key</li>
+    <li><strong>Web server logs</strong> — deleted after 30 days</li>
+    <li><strong>Payment records</strong> — retained as required by Australian tax law (7 years)</li>
+  </ul>
+
+  <h2>Your rights</h2>
+  <p>You can request a copy of any data we hold about you, or request deletion of your data, by emailing <strong>privacy@btcwave.app</strong>. We will respond within 30 days.</p>
+
+  <h2>Open source</h2>
+  <p>The entire Bitcoin Wave codebase is open source at <a href="https://github.com/btcwave">github.com/btcwave</a>. You can verify every claim in this policy by reading the code yourself. The web server source is at <a href="https://github.com/btcwave/btcwave-web">btcwave-web</a>.</p>
+
+  <h2>Contact</h2>
+  <p>For privacy questions: <strong>privacy@btcwave.app</strong></p>
+
+  <h2>Changes</h2>
+  <p>If we change this policy, the updated version will be posted here with a new "last updated" date. Substantive changes will be announced on our GitHub.</p>
+</div>
+<footer><a href="/">Bitcoin Wave</a> — <a href="/docs">Docs</a> · <a href="/privacy">Privacy</a> · <a href="/terms">Terms</a> · <a href="https://github.com/btcwave">GitHub</a></footer>
+</body>
+</html>

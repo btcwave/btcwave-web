@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How It Works — Bitcoin Wave</title>
+<meta name="description" content="How Bitcoin Wave turns your computer into a self-sovereign Bitcoin bank. What your agent installs, how verification works, and why self-custody matters.">
+<link rel="stylesheet" href="/static/docs/style.css">
+</head>
+<body>
+<nav><a href="/">Bitcoin Wave</a> / <a href="/docs">Docs</a> / How It Works</nav>
+<div class="container">
+  <h1>How Bitcoin Wave Works</h1>
+  <p class="intro">Bitcoin Wave lets your AI agent set up a complete Bitcoin banking stack on hardware you own. One license key, one instruction to your agent, and you're self-sovereign. Here's what that actually means.</p>
+
+  <h2>The problem</h2>
+  <p>Most people who own Bitcoin don't actually hold it. They trust an exchange — Coinbase, Binance, whoever — to hold it for them. This means:</p>
+  <ul>
+    <li>The exchange can freeze your account</li>
+    <li>The exchange can be hacked (and many have been)</li>
+    <li>The exchange can go bankrupt (FTX lost billions in customer funds)</li>
+    <li>You don't verify transactions yourself — you trust the exchange to be honest</li>
+  </ul>
+  <p>Running your own node fixes all of this. But setting one up has historically required deep technical knowledge — command lines, config files, networking, cryptography. Most people give up.</p>
+
+  <h2>The solution</h2>
+  <p>Bitcoin Wave bridges the gap. You tell your AI agent one sentence, and it handles the entire setup. The agent uses the <code>btcwave</code> CLI — a deterministic installer that knows exactly what to do on your hardware.</p>
+
+  <h2>What gets installed</h2>
+
+  <h3>Bitcoin Knots (the node)</h3>
+  <p>Bitcoin Knots is a well-established Bitcoin node implementation. It validates every transaction and every block since 2009. It's the same software that thousands of node operators run worldwide — Bitcoin Wave doesn't fork it or modify it. Your agent downloads the official release, verifies the cryptographic checksums, and installs it with a configuration optimised for your hardware.</p>
+  <p>Key configuration choices:</p>
+  <ul>
+    <li><strong>Tor by default</strong> — your node's IP address is hidden from the Bitcoin network</li>
+    <li><strong>Spam filtering</strong> — blocks known spam transaction patterns</li>
+    <li><strong>ZMQ enabled</strong> — allows Lightning and other services to receive real-time block notifications</li>
+    <li><strong>Tuned for your hardware</strong> — memory cache, thread count, and connection limits are set based on what your machine can handle</li>
+  </ul>
+
+  <h3>Lightning Network (LND)</h3>
+  <p>Lightning is Bitcoin's payment layer — it enables instant, near-free transactions. Your agent installs LND (Lightning Network Daemon), connects it to your node, and can help you open channels and manage liquidity.</p>
+
+  <h3>Fulcrum (Electrum server)</h3>
+  <p>Fulcrum indexes the blockchain so you can connect any Bitcoin wallet (Sparrow, Electrum, BlueWallet, etc.) to your own node. This means your wallet queries go to your hardware, not to a third-party server.</p>
+
+  <h3>BTCPay Server</h3>
+  <p>If you run a business, BTCPay lets you accept Bitcoin payments directly — no payment processor, no fees beyond the Bitcoin network fee. Invoices, payment tracking, and accounting integration.</p>
+
+  <h3>Dashboard</h3>
+  <p>A real-time web interface showing your node's status: blockchain height, sync progress, connected peers, mempool activity, hashrate, and more. Accessible from any browser on your network.</p>
+
+  <h3>MCP Server</h3>
+  <p>The MCP (Model Context Protocol) server is how your AI agent communicates with your node after setup. It provides structured tools for checking status, estimating fees, querying transactions, and running diagnostics — all through natural conversation with your agent.</p>
+
+  <h2>The trust model</h2>
+  <p>Bitcoin Wave is designed so you don't have to trust us:</p>
+
+  <h3>Open source</h3>
+  <p>Every repository is public on <a href="https://github.com/btcwave">GitHub</a>. You can read every line of code, every config file, every install script. If you want to build it yourself instead of buying a key, you can.</p>
+
+  <h3>Stock binaries</h3>
+  <p>We don't distribute our own Bitcoin software. Your agent downloads Bitcoin Knots from the official source and verifies the checksums match. You're running the same binary that the Bitcoin community audits and reviews.</p>
+
+  <h3>No phone home</h3>
+  <p>Your license key is validated once at install time. After that, your node never contacts btcwave.app again. There's no telemetry, no analytics, no usage tracking. Your node is yours.</p>
+
+  <h3>Seed ceremony</h3>
+  <p>Your wallet's master key (the 24-word seed phrase) is generated on your hardware and displayed on your screen. Your AI agent is explicitly told to look away during this step. The seed never passes through any network, any API, or any third-party system. Paper and pen only.</p>
+
+  <h2>The autonomy ladder</h2>
+  <p>After setup, you decide how much your agent can do:</p>
+  <table>
+    <thead><tr><th>Level</th><th>Name</th><th>What your agent can do</th></tr></thead>
+    <tbody>
+      <tr><td>L0</td><td>Read</td><td>Check status, read blockchain data. Cannot move funds.</td></tr>
+      <tr><td>L1</td><td>Receive</td><td>Generate invoices and receive payments. Cannot send.</td></tr>
+      <tr><td>L2</td><td>Propose</td><td>Draft transactions for your approval. You confirm each one.</td></tr>
+      <tr><td>L3</td><td>Autonomous</td><td>Send within daily limits you set. Full management within caps.</td></tr>
+    </tbody>
+  </table>
+  <p>You start at L0 (read-only) and can escalate when you're comfortable. The limits are enforced by the vault — your agent physically cannot exceed them, regardless of what it's asked to do.</p>
+
+  <h2>What you're paying for</h2>
+  <p>The software is open source and free. The $49 license key pays for the <strong>orchestrated experience</strong> — the curated configuration, the deterministic installer, the agent skill, the dashboard, and the MCP integration that makes it all work as one coherent system. It's the difference between having all the ingredients and having the recipe.</p>
+
+  <div class="nav-footer">
+    <a href="/docs">← All Docs</a>
+    <a href="/">Home →</a>
+  </div>
+</div>
+<footer><a href="/">Bitcoin Wave</a> — <a href="/docs">Docs</a> · <a href="/privacy">Privacy</a> · <a href="/terms">Terms</a> · <a href="https://github.com/btcwave">GitHub</a></footer>
+</body>
+</html>

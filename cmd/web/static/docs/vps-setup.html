@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VPS Setup Guide — Bitcoin Wave</title>
+<meta name="description" content="Step-by-step guide to running your own Bitcoin node on a virtual private server. No technical knowledge required.">
+<link rel="stylesheet" href="/static/docs/style.css">
+</head>
+<body>
+<nav><a href="/">Bitcoin Wave</a> / <a href="/docs">Docs</a> / VPS Setup</nav>
+<div class="container">
+  <h1>Setting Up Bitcoin Wave on a VPS</h1>
+  <p class="intro">A VPS (Virtual Private Server) is a computer in the cloud that runs 24/7. You rent it by the month, and your Bitcoin node runs on it permanently. This guide assumes zero technical knowledge — follow each step exactly.</p>
+
+  <div class="callout">
+    <strong>What you need before starting:</strong>
+    <ul>
+      <li>A Bitcoin Wave license key ($49 one-time at <a href="/">btcwave.app</a>)</li>
+      <li>An AI agent (Claude Code, or similar) — this is what does the actual setup</li>
+      <li>A credit card for the VPS hosting (~$20–40/month)</li>
+      <li>A pen and paper (for your wallet seed — not optional)</li>
+    </ul>
+  </div>
+
+  <h2>Step 1: Choose a VPS provider</h2>
+  <p>You need a server with at least <strong>2 CPU cores, 4 GB RAM, and 1 TB of SSD storage</strong>. Here are providers that work well:</p>
+
+  <table>
+    <thead><tr><th>Provider</th><th>Plan</th><th>Monthly cost</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>Vultr</td><td>High Frequency 2 vCPU / 4 GB / 1 TB NVMe</td><td>~$36/mo</td><td>Good global coverage, Bitcoin-friendly</td></tr>
+      <tr><td>Hetzner</td><td>CPX31 / 4 vCPU / 8 GB / 1 TB</td><td>~$20/mo</td><td>Best value, EU-based</td></tr>
+      <tr><td>OVH</td><td>B2-15 / 4 vCPU / 15 GB / 1 TB</td><td>~$30/mo</td><td>Strong privacy, no KYC on some plans</td></tr>
+      <tr><td>DigitalOcean</td><td>Premium 4 vCPU / 8 GB / 1 TB</td><td>~$40/mo</td><td>Beginner-friendly interface</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout warn">
+    <strong>Important:</strong> You need at least 1 TB of NVMe SSD storage. The Bitcoin blockchain is currently over 850 GB. Regular hard drives are too slow. If a provider only offers 500 GB, it won't work.
+  </div>
+
+  <h2>Step 2: Create your server</h2>
+  <ol>
+    <li>Sign up at your chosen provider</li>
+    <li>Create a new server (they may call it a "droplet", "instance", or "VPS")</li>
+    <li>Choose <strong>Ubuntu 24.04</strong> or <strong>Debian 12</strong> as the operating system</li>
+    <li>Select the plan with at least 1 TB NVMe SSD</li>
+    <li>Choose a region close to you (lower latency, but any region works)</li>
+    <li>Set a strong root password — or better, upload an SSH key if you know how</li>
+    <li>Click "Create" and wait for it to start (usually under 60 seconds)</li>
+  </ol>
+
+  <p>Once created, you'll see an <strong>IP address</strong> — a number like <code>203.0.113.45</code>. Write this down. You'll also have the <strong>password</strong> you set.</p>
+
+  <h2>Step 3: Tell your agent</h2>
+  <p>Open your AI agent (Claude Code or similar) and say:</p>
+
+  <div class="code-block">
+    Install the btcwave skill and set up my Bitcoin node.<br>
+    My license key is WAVE-FULL-XXXX-XXXX.<br>
+    The target server is 203.0.113.45, username is root,<br>
+    password is [your password].
+  </div>
+
+  <p>Your agent will:</p>
+  <ol>
+    <li>Connect to your server via SSH</li>
+    <li>Check the hardware meets requirements</li>
+    <li>Install Bitcoin Knots (the node software) with verified checksums</li>
+    <li>Configure everything — Tor for privacy, optimised settings for your hardware</li>
+    <li>Start the initial blockchain sync</li>
+  </ol>
+
+  <h2>Step 4: Wait for sync</h2>
+  <p>The blockchain needs to download and verify. This takes <strong>6–24 hours</strong> depending on your server's speed. You don't need to do anything during this time. Your agent can check progress anytime:</p>
+
+  <div class="code-block">Check my Bitcoin node sync progress.</div>
+
+  <h2>Step 5: The seed ceremony</h2>
+  <p>Once synced, your agent will tell you it's time to create your wallet. This is the <strong>one step only you can do</strong>:</p>
+  <ol>
+    <li>Your screen will display 24 words</li>
+    <li>Write them on paper with a pen</li>
+    <li>Do NOT type them anywhere, screenshot them, or save them digitally</li>
+    <li>Store the paper somewhere safe — a fireproof safe, a bank deposit box</li>
+    <li>These 24 words ARE your money. Anyone who has them controls your Bitcoin</li>
+  </ol>
+
+  <div class="callout warn">
+    <strong>Your agent will NOT see these words.</strong> Bitcoin Wave is designed so that your seed never passes through any software, AI, or network. Paper only. This is non-negotiable.
+  </div>
+
+  <h2>Step 6: You're done</h2>
+  <p>After the seed ceremony, the rest of the stack installs automatically:</p>
+  <ul>
+    <li><strong>Lightning Network</strong> — for fast, cheap payments</li>
+    <li><strong>Electrum Server</strong> — connect any Bitcoin wallet</li>
+    <li><strong>BTCPay Server</strong> — accept Bitcoin payments for your business</li>
+    <li><strong>Dashboard</strong> — see your node's status in a web browser</li>
+    <li><strong>MCP Server</strong> — your agent can now manage your node ongoing</li>
+  </ul>
+
+  <p>From here, your agent manages everything. Ask it to check your node health, open Lightning channels, or monitor the mempool — all through natural conversation.</p>
+
+  <h2>Monthly costs</h2>
+  <table>
+    <thead><tr><th>Item</th><th>Cost</th><th>Frequency</th></tr></thead>
+    <tbody>
+      <tr><td>Bitcoin Wave license</td><td>$49</td><td>One-time</td></tr>
+      <tr><td>VPS hosting</td><td>$20–40</td><td>Monthly</td></tr>
+      <tr><td>Total first month</td><td>$69–89</td><td></td></tr>
+      <tr><td>Ongoing</td><td>$20–40</td><td>Monthly</td></tr>
+    </tbody>
+  </table>
+
+  <h2>FAQ</h2>
+
+  <h3>Can I use a provider not listed here?</h3>
+  <p>Yes — any VPS with 2+ CPU cores, 4+ GB RAM, and 1+ TB NVMe SSD running Ubuntu or Debian will work. Avoid providers that block Bitcoin traffic (rare, but it happens).</p>
+
+  <h3>What if my server goes down?</h3>
+  <p>Your Bitcoin is safe — it's secured by your seed words, not by the server. When the server comes back, your node resumes syncing automatically. If you need to move to a new server, your agent can set up a fresh node and your wallet recovers from the seed.</p>
+
+  <h3>Can I access my node from anywhere?</h3>
+  <p>Yes. Your agent connects via SSH, which works from anywhere with internet. The dashboard can be accessed directly via your server's IP address.</p>
+
+  <h3>Is my data private?</h3>
+  <p>Bitcoin Wave configures your node to run over Tor by default, which hides your server's IP from the Bitcoin network. Your VPS provider can see that you're running a Bitcoin node, but cannot see your transactions or wallet balance.</p>
+
+  <div class="nav-footer">
+    <a href="/docs/raspberry-pi">Next: Raspberry Pi Setup →</a>
+  </div>
+</div>
+<footer><a href="/">Bitcoin Wave</a> — <a href="/docs">Docs</a> · <a href="/privacy">Privacy</a> · <a href="/terms">Terms</a> · <a href="https://github.com/btcwave">GitHub</a></footer>
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Raspberry Pi Setup — Bitcoin Wave</title>
+<meta name="description" content="Run your own Bitcoin node on a Raspberry Pi 5. Complete guide from unboxing to self-sovereignty.">
+<link rel="stylesheet" href="/static/docs/style.css">
+</head>
+<body>
+<nav><a href="/">Bitcoin Wave</a> / <a href="/docs">Docs</a> / Raspberry Pi Setup</nav>
+<div class="container">
+  <h1>Running Bitcoin Wave on a Raspberry Pi</h1>
+  <p class="intro">The Raspberry Pi 5 is the Bitcoin Wave reference platform. It's small, silent, cheap to run, and powerful enough to validate every Bitcoin transaction ever made. This guide takes you from an empty box to a fully sovereign Bitcoin node.</p>
+
+  <h2>What to buy</h2>
+  <p>You need three things: the Pi itself, storage, and a few accessories. Total cost: $130–200 depending on options.</p>
+
+  <h3>Essential</h3>
+  <table>
+    <thead><tr><th>Item</th><th>Recommendation</th><th>Approx. cost</th></tr></thead>
+    <tbody>
+      <tr><td>Raspberry Pi 5</td><td>8 GB model (minimum). 16 GB if you want more headroom for Lightning.</td><td>$80–100</td></tr>
+      <tr><td>NVMe SSD</td><td>1 TB minimum, 2 TB recommended. Samsung 990 EVO, WD Black SN770, or Crucial P3 Plus all work well.</td><td>$60–90</td></tr>
+      <tr><td>NVMe HAT / adapter</td><td>Pimoroni NVMe Base, Geekworm X1001, or the official Raspberry Pi M.2 HAT+. Connects the SSD to the Pi.</td><td>$15–25</td></tr>
+      <tr><td>USB-C power supply</td><td>Official Raspberry Pi 27W USB-C supply. Don't use a phone charger — the Pi 5 needs stable 5V/5A.</td><td>$12</td></tr>
+      <tr><td>MicroSD card</td><td>Any 16 GB+ card — only used for the initial OS install, then the Pi boots from NVMe.</td><td>$8</td></tr>
+      <tr><td>Ethernet cable</td><td>Cat 5e or better. WiFi works but Ethernet is more reliable for a 24/7 node.</td><td>$5</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Optional but recommended</h3>
+  <table>
+    <thead><tr><th>Item</th><th>Why</th><th>Approx. cost</th></tr></thead>
+    <tbody>
+      <tr><td>Case with fan</td><td>Keeps the Pi cool during initial sync (CPU-intensive). The Argon ONE V3 or Flirc case are solid choices.</td><td>$15–30</td></tr>
+      <tr><td>UPS / battery backup</td><td>Protects against power cuts during blockchain sync. A small USB-C UPS like the PiSugar 3 works.</td><td>$30–50</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Step 1: Flash the operating system</h2>
+  <ol>
+    <li>Download the <strong>Raspberry Pi Imager</strong> from <code>raspberrypi.com/software</code> on your regular computer</li>
+    <li>Insert your MicroSD card</li>
+    <li>In the Imager, choose:
+      <ul>
+        <li>Device: <strong>Raspberry Pi 5</strong></li>
+        <li>OS: <strong>Raspberry Pi OS Lite (64-bit)</strong> — under "Raspberry Pi OS (other)". You want the "Lite" version — no desktop needed</li>
+        <li>Storage: your MicroSD card</li>
+      </ul>
+    </li>
+    <li>Click the <strong>gear icon</strong> (or "Edit Settings") before writing:
+      <ul>
+        <li>Set a <strong>username</strong> (e.g., <code>bitcoin</code>) and <strong>password</strong></li>
+        <li>Enable <strong>SSH</strong> (under Services tab) — "Use password authentication"</li>
+        <li>Optionally set your WiFi details (but Ethernet is better)</li>
+      </ul>
+    </li>
+    <li>Click <strong>Write</strong> and wait for it to finish</li>
+  </ol>
+
+  <h2>Step 2: Boot the Pi</h2>
+  <ol>
+    <li>Insert the MicroSD card into the Pi</li>
+    <li>Connect the NVMe SSD via the HAT/adapter</li>
+    <li>Plug in Ethernet</li>
+    <li>Connect power — the Pi boots automatically</li>
+    <li>Wait 60 seconds for it to start up</li>
+  </ol>
+
+  <h2>Step 3: Find your Pi on the network</h2>
+  <p>You need the Pi's IP address. The easiest ways:</p>
+  <ul>
+    <li><strong>Router admin page</strong> — log into your router (usually 192.168.0.1 or 192.168.1.1) and look for a device called "raspberrypi" in the connected devices list</li>
+    <li><strong>Ask your agent</strong> — if your agent has network scanning ability, it can find the Pi for you</li>
+    <li><strong>Try the hostname</strong> — on many networks, <code>raspberrypi.local</code> works</li>
+  </ul>
+
+  <p>Write down the IP address (something like <code>192.168.0.50</code>).</p>
+
+  <h2>Step 4: Tell your agent</h2>
+  <p>This is where Bitcoin Wave takes over. Open your AI agent and say:</p>
+
+  <div class="code-block">
+    Install the btcwave skill and set up my Bitcoin node.<br>
+    My license key is WAVE-FULL-XXXX-XXXX.<br>
+    The target is a Raspberry Pi 5 at 192.168.0.50,<br>
+    username is bitcoin, password is [your password].
+  </div>
+
+  <p>Your agent will SSH into the Pi and handle everything:</p>
+  <ul>
+    <li>Move the boot drive to NVMe (so the MicroSD isn't a bottleneck)</li>
+    <li>Install Bitcoin Knots with verified checksums</li>
+    <li>Configure for optimal Pi 5 performance (dbcache, threads, Tor)</li>
+    <li>Start the initial blockchain download</li>
+  </ul>
+
+  <h2>Step 5: Wait for sync</h2>
+  <p>The initial blockchain download and verification takes <strong>12–24 hours</strong> on a Pi 5 with NVMe. During this time:</p>
+  <ul>
+    <li>The Pi will run warm — this is normal. A case with a fan helps</li>
+    <li>Don't unplug the power</li>
+    <li>You can check progress anytime: ask your agent, or visit the dashboard at <code>http://[pi-ip]:8380</code></li>
+  </ul>
+
+  <h2>Step 6: Seed ceremony</h2>
+  <p>Once synced, your agent will tell you it's time to create your wallet seed. <strong>This is the one step only you can do.</strong></p>
+  <ol>
+    <li>24 words will appear on screen</li>
+    <li>Write them on paper — not digitally, not in a photo</li>
+    <li>Store the paper somewhere safe and fireproof</li>
+    <li>Tell your agent when you're done</li>
+  </ol>
+
+  <div class="callout warn">
+    <strong>These 24 words are your Bitcoin.</strong> If you lose them, no one — not Bitcoin Wave, not your agent, not anyone — can recover your funds. Treat them like cash in a safe.
+  </div>
+
+  <h2>Step 7: You're sovereign</h2>
+  <p>The remaining stack installs automatically. When complete, you have:</p>
+  <ul>
+    <li>A full Bitcoin node validating every transaction</li>
+    <li>Lightning Network for instant payments</li>
+    <li>A web dashboard at <code>http://[pi-ip]:8380</code></li>
+    <li>An MCP server so your agent can manage it all going forward</li>
+  </ul>
+
+  <h2>Living with your Pi node</h2>
+  <ul>
+    <li><strong>Power:</strong> draws about 8–12 watts. Costs roughly $1–2/month in electricity</li>
+    <li><strong>Noise:</strong> silent (no fans on the base model, and aftermarket fans are whisper-quiet)</li>
+    <li><strong>Location:</strong> tuck it behind your router, on a shelf, wherever. It just needs power and Ethernet</li>
+    <li><strong>Maintenance:</strong> your agent handles updates and monitoring. You don't need to touch it</li>
+  </ul>
+
+  <h2>Troubleshooting</h2>
+
+  <h3>Pi won't boot</h3>
+  <p>Re-flash the MicroSD card. Make sure you selected "Raspberry Pi OS Lite (64-bit)" — not the desktop version, and not 32-bit.</p>
+
+  <h3>Can't find the Pi on the network</h3>
+  <p>Connect a monitor and keyboard temporarily. The Pi will show its IP address on the login screen.</p>
+
+  <h3>Sync is very slow</h3>
+  <p>Check that the NVMe SSD is connected properly — if the Pi is using the MicroSD for storage, sync will be 10x slower. Your agent can verify this.</p>
+
+  <h3>Pi runs very hot during sync</h3>
+  <p>Normal during initial sync (CPU at 100% for hours). A case with active cooling helps. After sync completes, the Pi runs cool.</p>
+
+  <div class="nav-footer">
+    <a href="/docs/vps-setup">← VPS Setup</a>
+    <a href="/docs/hardware">Hardware Guide →</a>
+  </div>
+</div>
+<footer><a href="/">Bitcoin Wave</a> — <a href="/docs">Docs</a> · <a href="/privacy">Privacy</a> · <a href="/terms">Terms</a> · <a href="https://github.com/btcwave">GitHub</a></footer>
+</body>
+</html>
