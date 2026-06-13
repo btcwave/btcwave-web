@@ -9,6 +9,7 @@ import (
 	"path/filepath"
 
 	"github.com/btcwave/btcwave-web/internal/api"
+	"github.com/btcwave/btcwave-web/internal/checkout"
 	"github.com/btcwave/btcwave-web/internal/keys"
 	"github.com/btcwave/btcwave-web/internal/stripe"
 )
@@ -19,7 +20,10 @@ var staticFS embed.FS
 func main() {
 	listen := flag.String("listen", ":8080", "Listen address")
 	dataDir := flag.String("data", "/var/lib/btcwave-web", "Data directory for key storage")
-	stripeSecret := flag.String("stripe-webhook-secret", "", "Stripe webhook signing secret")
+	stripeKey := flag.String("stripe-key", "", "Stripe secret key (sk_test_... or sk_live_...)")
+	stripePriceID := flag.String("stripe-price", "", "Stripe price ID for the $49 license")
+	stripeWebhookSecret := flag.String("stripe-webhook-secret", "", "Stripe webhook signing secret")
+	baseURL := flag.String("base-url", "https://btcwave.com", "Public base URL for redirects")
 	flag.Parse()
 
 	if err := os.MkdirAll(*dataDir, 0700); err != nil {
@@ -36,10 +40,15 @@ func main() {
 	apiHandler := api.New(store)
 	apiHandler.Register(mux)
 
-	webhookHandler := stripe.NewWebhookHandler(store, *stripeSecret, func(key *keys.Key) {
+	webhookHandler := stripe.NewWebhookHandler(store, *stripeWebhookSecret, func(key *keys.Key) {
 		log.Printf("New key issued: %s (%s) for %s", key.Code, key.Tier, key.Email)
 	})
 	webhookHandler.Register(mux)
+
+	if *stripeKey != "" && *stripePriceID != "" {
+		checkoutHandler := checkout.New(*stripeKey, *stripePriceID, *baseURL)
+		checkoutHandler.Register(mux)
+	}
 
 	mux.HandleFunc("/", serveIndex)
 	mux.HandleFunc("/success", serveSuccess)

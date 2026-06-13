@@ -164,10 +164,25 @@ footer a{color:var(--accent);text-decoration:none}
 </div>
 
 <script>
-document.getElementById('buy-btn').addEventListener('click', function(e) {
+document.getElementById('buy-btn').addEventListener('click', async function(e) {
   e.preventDefault();
-  // Stripe checkout redirect will be wired here
-  alert('Checkout coming soon — Stripe + BTCPay integration in progress.');
+  this.textContent = 'LOADING...';
+  this.style.pointerEvents = 'none';
+  try {
+    const r = await fetch('/api/checkout', {method: 'POST'});
+    const d = await r.json();
+    if (d.url) {
+      window.location.href = d.url;
+    } else {
+      alert(d.error || 'Checkout unavailable');
+      this.textContent = 'GET YOUR KEY';
+      this.style.pointerEvents = '';
+    }
+  } catch (err) {
+    alert('Connection error — try again');
+    this.textContent = 'GET YOUR KEY';
+    this.style.pointerEvents = '';
+  }
 });
 </script>
 </body>
