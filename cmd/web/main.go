@@ -23,8 +23,23 @@ func main() {
 	stripeKey := flag.String("stripe-key", "", "Stripe secret key (sk_test_... or sk_live_...)")
 	stripePriceID := flag.String("stripe-price", "", "Stripe price ID for the $49 license")
 	stripeWebhookSecret := flag.String("stripe-webhook-secret", "", "Stripe webhook signing secret")
-	baseURL := flag.String("base-url", "https://btcwave.com", "Public base URL for redirects")
+	baseURL := flag.String("base-url", "https://btcwave.app", "Public base URL for redirects")
 	flag.Parse()
+
+	if *stripeKey == "" {
+		*stripeKey = os.Getenv("STRIPE_KEY")
+	}
+	if *stripePriceID == "" {
+		*stripePriceID = os.Getenv("STRIPE_PRICE")
+	}
+	if *stripeWebhookSecret == "" {
+		*stripeWebhookSecret = os.Getenv("STRIPE_WEBHOOK_SECRET")
+	}
+	if *baseURL == "https://btcwave.app" {
+		if v := os.Getenv("BASE_URL"); v != "" {
+			*baseURL = v
+		}
+	}
 
 	if err := os.MkdirAll(*dataDir, 0700); err != nil {
 		log.Fatalf("Cannot create data dir: %v", err)
